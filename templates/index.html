@@ -1,17 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Lista de Cursos{% endblock %}
+{% block title %}Início{% endblock %}
 
 {% block content %}
-<h2>Cursos Disponíveis</h2>
+<header class="topo">
+    <div class="logo-nav">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
 
-<ul>
-    {% for curso in cursos %}
-        <li>
-            <a href="{{ url_for('curso_page', curso_id=curso.id) }}">
-                {{ curso.nome }}
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+
+        <!-- Barra de pesquisa -->
+        <form class="barra-pesquisa" action="/pesquisar" method="get">
+            <input type="text" name="q" placeholder="Pesquisar...">
+            <button type="submit">🔍</button>
+        </form>
+    </div>
+</header>
+
+<section class="conteudo">
+    <h2>Bem-vindo</h2>
+    <p>Este é o site inicial.</p>
+</section>
 {% endblock %}

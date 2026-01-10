@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Desabafo{% endblock %}
+
+{% block content %}
+<h2>Espaço de Desabafo</h2>
+
+<form method="post">
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome"><br><br>
+
+    <input type="checkbox" id="anonimo" name="anonimo">
+    <label for="anonimo">Enviar como anônimo</label><br><br>
+
+    <label for="mensagem">Seu desabafo:</label><br>
+    <textarea id="mensagem" name="mensagem" rows="5" required></textarea><br><br>
+
+    <button type="submit">Enviar</button>
+</form>
+
+{% if mensagem %}
+    <hr>
+    <h3>Desabafo enviado:</h3>
+
+    <p>
+        <strong>
+            {% if anonimo %}
+                Anônimo
+            {% else %}
+                {{ nome }}
+            {% endif %}
+        </strong>
+    </p>
+
+    <p>{{ mensagem }}</p>
+{% endif %}
+{% endblock %}
