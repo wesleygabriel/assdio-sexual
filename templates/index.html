@@ -3,13 +3,16 @@
 {% block title %}Início{% endblock %}
 
 {% block content %}
-
 <div class="banner-container">
-    <button id="btn-anterior">▲</button>
 
-    <a id="banner-link" href="/conteudo/{{ banners[0].id }}">
-        <img id="banner-img"
-             src="{{ url_for('static', filename=banners[0].imagem) }}">
+    <button class="banner-btn banner-prev" onclick="anterior()">◀</button>
+
+    <a id="banner-link" href="/conteudo/1" class="banner-img-wrapper">
+        <img
+            id="banner-img"
+            src="{{ url_for('static', filename=banners[0].imagem) }}"
+            alt="Banner"
+        >
     </a>
 
     <div class="descricao">
@@ -17,8 +20,10 @@
         <p id="banner-desc">{{ banners[0].descricao_curta }}</p>
     </div>
 
-    <button id="btn-proximo">▼</button>
+    <button class="banner-btn banner-next" onclick="proximo()">▶</button>
+
 </div>
+
 
 <!-- ✅ AQUI PODE -->
 <script>

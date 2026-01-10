@@ -1,141 +1,236 @@
-/* RESET */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+
+/* ================= ESTRUTURA PARA FOOTER NO FINAL ================= */
+html, body {
+    height: 100%;
 }
 
-/* BODY */
 body {
-    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    background: #f5f7fa;
     color: #333;
 }
 
+main {
+    flex: 1;
+    padding: 40px;
+}
+
 /* ================= HEADER ================= */
-
-header {
-    background-color: #ffffff;
-    padding: 20px 40px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* LOGO */
-header .logo {
-    width: 120px;
-}
-
-/* ÁREA SUPERIOR */
-.header-top {
+.header {
+    background: #ffffff;
+    padding: 20px 50px;
     display: flex;
-    align-items: flex-start;
-    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    min-height: 120px;
 }
 
-/* BARRA DE PESQUISA */
-.search-box {
-    margin-top: 15px; /* um pouco mais para baixo */
-}
-
-.search-box input {
-    width: 280px;
-    padding: 10px 14px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-
-.search-box input:focus {
-    outline: none;
-    border-color: #2563eb;
-}
-
-/* NAVBAR */
-header nav {
-    margin-top: 20px;
+/* LOGO + TÍTULO */
+.header-left {
     display: flex;
+    align-items: center;
     gap: 20px;
 }
 
-header nav a {
-    text-decoration: none;
-    color: #2563eb;
+.header img.logo {
+    height: 160px;
+    width: 120px;
+}
+
+.header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* ================= PESQUISA ================= */
+.search {
+    display: flex;
+    align-items: center;
+    background: #f1f3f6;
+    border-radius: 30px;
+    padding: 6px 14px;
+    transition: box-shadow 0.3s ease;
+}
+
+.search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px;
+    width: 220px;
     font-size: 14px;
 }
 
-header nav a:hover {
-    text-decoration: underline;
+.search button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
 }
 
-/* ================= MAIN ================= */
+.search:hover {
+    box-shadow: 0 0 0 2px #4f46e5;
+}
 
-main {
-    padding: 40px;
+/* ================= NAVBAR ================= */
+nav {
     display: flex;
-    justify-content: center;
+    gap: 35px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: 10px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+    background: #4f46e5;
+    color: white;
+    transform: none; /* ❌ sem subir */
 }
 
 /* ================= BANNER ================= */
-
 .banner-container {
-    background-color: white;
-    display: flex;
-    align-items: center;
-    gap: 25px;
+    background: white;
     padding: 25px;
-    border-radius: 10px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+
+    display: grid;
+    grid-template-columns: auto auto 1fr auto; 
+    /* seta | imagem | texto | seta */
+
+    align-items: center;   /* 🔑 mesma altura */
+    gap: 25px;
+
     max-width: 1000px;
-    width: 100%;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    margin: 0 auto;
 }
 
-/* IMAGEM DO BANNER */
-.banner-container img {
-    width: 420px;
-    height: 240px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
+/* IMAGEM */
+.banner-img-wrapper img {
+    width: 380px;
+    border-radius: 18px;
+    transition: transform 0.3s ease;
 }
 
-/* DESCRIÇÃO */
+.banner-img-wrapper img:hover {
+    transform: scale(1.02);
+}
+
+/* TEXTO CENTRALIZADO */
 .descricao {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* centraliza vertical */
 }
 
 .descricao h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #222;
 }
 
 .descricao p {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    max-width: 420px;
 }
 
-/* SETAS */
-.banner-container button {
-    background-color: #2563eb;
-    color: white;
+/* ================= SETAS ================= */
+.banner-btn {
+    background: #f1f3f6;
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     font-size: 18px;
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-.banner-container button:hover {
-    background-color: #1e40af;
+.banner-btn:hover {
+    background: #4f46e5;
+    color: white;
+    transform: scale(1.1);
 }
+
+
 
 /* ================= FOOTER ================= */
-
 footer {
-    background-color: #111;
-    color: #ccc;
+    background: #ffffff;
     text-align: center;
-    padding: 20px;
-    margin-top: 60px;
+    padding: 15px;
     font-size: 14px;
+    color: #666;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+
+/* ================= RESPONSIVO ================= */
+@media (max-width: 900px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        padding: 25px;
+    }
+
+    .search input {
+        width: 180px;
+    }
+
+    nav {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .banner-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .banner-btn {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 500px) {
+    .header h1 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .header img.logo {
+        height: 65px;
+    }
+
+    .search input {
+        width: 150px;
+    }
+
+    .banner-img-wrapper img {
+        width: 100%;
+    }
 }
