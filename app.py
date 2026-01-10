@@ -1,9 +1,9 @@
 import os
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request
 
 app = Flask(__name__)
 
-# 🔹 LIST OF BANNERS (changed from dictionary)
+# 🔹 LISTA DE BANNERS
 banners = [
     {
         "id": 1,
@@ -28,12 +28,11 @@ banners = [
     },
     {
         "id": 4,
-        "titulo": "Tipos de assédio",
-        "descricao_curta": "Os perigos do assédio nas redes sociais.",
-        "descricao_completa": "Texto completo sobre assédio online.",
+        "titulo": "Tipos de Assédio",
+        "descricao_curta": "Conheça os principais tipos de assédio.",
+        "descricao_completa": "Descrição completa sobre os tipos de assédio.",
         "imagem": "images/banner4.jpg"
     }
-
 ]
 
 # 🔹 ROTAS PRINCIPAIS
@@ -53,16 +52,30 @@ def login():
 def desabafo():
     return render_template("desabafo.html")
 
+# 🔹 ROTA DE PESQUISA
+@app.route("/pesquisa")
+def pesquisa():
+    termo = request.args.get("q", "").lower()
 
+    resultados = [
+        banner for banner in banners
+        if termo in banner["titulo"].lower()
+        or termo in banner["descricao_curta"].lower()
+    ]
 
-# 🔹 ROTA DO CONTEÚDO COMPLETO DO BANNER
+    return render_template(
+        "pesquisa.html",
+        termo=termo,
+        resultados=resultados
+    )
+
+# 🔹 ROTA DO CONTEÚDO COMPLETO
 @app.route("/conteudo/<int:id>")
 def conteudo(id):
-    banner = next((b for b in banners if b['id'] == id), None)
+    banner = next((b for b in banners if b["id"] == id), None)
     if not banner:
         abort(404)
     return render_template("conteudo.html", banner=banner)
-
 
 def main():
     app.run(port=int(os.environ.get('PORT', 5001)), debug=True)

@@ -1,19 +1,26 @@
-
- <h1>dsgnfgnfhnmgjmgndgbf</h1>
-  
-
 <header class="header">
+
+    <h1>dsgnfgnfhnmgjmgndgbf</h1>
+
     <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
 
-    <form class="search">
-        <input type="text" placeholder="Pesquisar...">
-        <button>🔍</button>
+    <!-- 🔍 BARRA DE PESQUISA FUNCIONAL -->
+    <form class="search" action="{{ url_for('pesquisa') }}" method="get">
+        <input
+            type="text"
+            name="q"
+            placeholder="Pesquisar..."
+            required
+        >
+        <button type="submit">🔍</button>
     </form>
 
+    <!-- NAVBAR -->
     <nav>
         <a href="{{ url_for('index') }}">Início</a>
         <a href="{{ url_for('contact') }}">Contato</a>
         <a href="{{ url_for('login') }}">Login</a>
         <a href="{{ url_for('desabafo') }}">Desabafo</a>
     </nav>
+
 </header>
