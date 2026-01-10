@@ -1,0 +1,141 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* BODY */
+body {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+/* ================= HEADER ================= */
+
+header {
+    background-color: #ffffff;
+    padding: 20px 40px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* LOGO */
+header .logo {
+    width: 120px;
+}
+
+/* ÁREA SUPERIOR */
+.header-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+/* BARRA DE PESQUISA */
+.search-box {
+    margin-top: 15px; /* um pouco mais para baixo */
+}
+
+.search-box input {
+    width: 280px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+/* NAVBAR */
+header nav {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #2563eb;
+    font-size: 14px;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+/* ================= MAIN ================= */
+
+main {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+/* ================= BANNER ================= */
+
+.banner-container {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* IMAGEM DO BANNER */
+.banner-container img {
+    width: 420px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* DESCRIÇÃO */
+.descricao {
+    flex: 1;
+}
+
+.descricao h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.descricao p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* SETAS */
+.banner-container button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.banner-container button:hover {
+    background-color: #1e40af;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    background-color: #111;
+    color: #ccc;
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+    font-size: 14px;
+}
