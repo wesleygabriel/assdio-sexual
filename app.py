@@ -10,22 +10,30 @@ banners = [
         "titulo": "Assédio no Trabalho",
         "descricao_curta": "Entenda o que é assédio no ambiente de trabalho.",
         "descricao_completa": "Texto completo sobre assédio no trabalho.",
-        "imagem": "banner1.jpg"
+        "imagem": "images/banner1.jpg"
     },
     {
         "id": 2,
         "titulo": "Assédio Escolar",
         "descricao_curta": "Como identificar e denunciar o assédio escolar.",
         "descricao_completa": "Texto completo sobre assédio escolar.",
-        "imagem": "banner2.jpg"
+        "imagem": "images/banner2.jpg"
     },
     {
         "id": 3,
         "titulo": "Assédio Online",
         "descricao_curta": "Os perigos do assédio nas redes sociais.",
         "descricao_completa": "Texto completo sobre assédio online.",
-        "imagem": "banner3.jpg"
+        "imagem": "images/banner3.jpg"
+    },
+    {
+        "id": 4,
+        "titulo": "Tipos de assédio",
+        "descricao_curta": "Os perigos do assédio nas redes sociais.",
+        "descricao_completa": "Texto completo sobre assédio online.",
+        "imagem": "images/banner4.jpg"
     }
+
 ]
 
 # 🔹 ROTAS PRINCIPAIS
@@ -45,6 +53,8 @@ def login():
 def desabafo():
     return render_template("desabafo.html")
 
+
+
 # 🔹 ROTA DO CONTEÚDO COMPLETO DO BANNER
 @app.route("/conteudo/<int:id>")
 def conteudo(id):
@@ -52,6 +62,7 @@ def conteudo(id):
     if not banner:
         abort(404)
     return render_template("conteudo.html", banner=banner)
+
 
 def main():
     app.run(port=int(os.environ.get('PORT', 5001)), debug=True)
