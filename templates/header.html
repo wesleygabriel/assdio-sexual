@@ -1,5 +1,15 @@
-<header>
-    <h1>dsgnfgnfhnmgjmgndgbf</h1>
+
+ <h1>dsgnfgnfhnmgjmgndgbf</h1>
+  
+
+<header class="header">
+    <img src="{{ url_for('static', filename='logo.png') }}" class="logo">
+
+    <form class="search">
+        <input type="text" placeholder="Pesquisar...">
+        <button>🔍</button>
+    </form>
+
     <nav>
         <a href="{{ url_for('index') }}">Início</a>
         <a href="{{ url_for('contact') }}">Contato</a>

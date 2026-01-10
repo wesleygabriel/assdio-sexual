@@ -3,21 +3,28 @@
 {% block title %}Início{% endblock %}
 
 {% block content %}
-<header class="topo">
-    <div class="logo-nav">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
 
+<div class="banner-container">
+    <button id="btn-anterior">▲</button>
 
-        <!-- Barra de pesquisa -->
-        <form class="barra-pesquisa" action="/pesquisar" method="get">
-            <input type="text" name="q" placeholder="Pesquisar...">
-            <button type="submit">🔍</button>
-        </form>
+    <a id="banner-link" href="/conteudo/{{ banners[0].id }}">
+        <img id="banner-img"
+             src="{{ url_for('static', filename=banners[0].imagem) }}">
+    </a>
+
+    <div class="descricao">
+        <h3 id="banner-titulo">{{ banners[0].titulo }}</h3>
+        <p id="banner-desc">{{ banners[0].descricao_curta }}</p>
     </div>
-</header>
 
-<section class="conteudo">
-    <h2>Bem-vindo</h2>
-    <p>Este é o site inicial.</p>
-</section>
+    <button id="btn-proximo">▼</button>
+</div>
+
+<!-- ✅ AQUI PODE -->
+<script>
+    window.BANNERS = {{ banners | tojson | safe }};
+</script>
+
+<script src="{{ url_for('static', filename='js/banners.js') }}"></script>
+
 {% endblock %}

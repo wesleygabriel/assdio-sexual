@@ -1,28 +1,60 @@
 import os
-
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
 
 app = Flask(__name__)
 
+# 🔹 LIST OF BANNERS (changed from dictionary)
+banners = [
+    {
+        "id": 1,
+        "titulo": "Assédio no Trabalho",
+        "descricao_curta": "Entenda o que é assédio no ambiente de trabalho.",
+        "descricao_completa": "Texto completo sobre assédio no trabalho.",
+        "imagem": "banner1.jpg"
+    },
+    {
+        "id": 2,
+        "titulo": "Assédio Escolar",
+        "descricao_curta": "Como identificar e denunciar o assédio escolar.",
+        "descricao_completa": "Texto completo sobre assédio escolar.",
+        "imagem": "banner2.jpg"
+    },
+    {
+        "id": 3,
+        "titulo": "Assédio Online",
+        "descricao_curta": "Os perigos do assédio nas redes sociais.",
+        "descricao_completa": "Texto completo sobre assédio online.",
+        "imagem": "banner3.jpg"
+    }
+]
+
+# 🔹 ROTAS PRINCIPAIS
 @app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html", banners=banners)
 
 @app.route("/contato")
 def contact():
-    return render_template('contact.html')
+    return render_template("contact.html")
 
 @app.route("/login")
 def login():
-    return render_template('login.html')
+    return render_template("login.html")
 
 @app.route("/desabafo")
 def desabafo():
-    return render_template('desabafo.html')
+    return render_template("desabafo.html")
 
+# 🔹 ROTA DO CONTEÚDO COMPLETO DO BANNER
+@app.route("/conteudo/<int:id>")
+def conteudo(id):
+    banner = next((b for b in banners if b['id'] == id), None)
+    if not banner:
+        abort(404)
+    return render_template("conteudo.html", banner=banner)
 
 def main():
-    app.run(port=int(os.environ.get('PORT', 5000)))
+    app.run(port=int(os.environ.get('PORT', 5001)), debug=True)
 
 if __name__ == "__main__":
     main()
