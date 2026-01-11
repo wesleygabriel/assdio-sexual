@@ -176,6 +176,260 @@ nav a:hover {
 }
 
 
+/* ================= CONTATO ================= */
+.contato-container {
+    max-width: 600px;
+    margin: 60px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.contato-container h2 {
+    text-align: center;
+    font-size: 26px;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+/* TEXTO CURTO */
+.contato-texto {
+    text-align: center;
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+/* FORM */
+.contato-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.contato-form label {
+    font-weight: 500;
+    color: #333;
+}
+
+.contato-form input,
+.contato-form textarea {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.contato-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.contato-form input:focus,
+.contato-form textarea:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79,70,229,0.15);
+}
+
+/* BOTÃO */
+.contato-form button {
+    margin-top: 15px;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: #4f46e5;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contato-form button:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+
+
+/* ================= FORMULÁRIO ================= */
+.form-container {
+    max-width: 520px;
+    margin: 60px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.form-container h2 {
+    text-align: center;
+    font-size: 26px;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.form-texto {
+    text-align: center;
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* FORM */
+.form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-login label {
+    font-weight: 500;
+    color: #333;
+}
+
+.form-login input {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-login input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79,70,229,0.15);
+}
+
+/* BOTÃO */
+.form-login button {
+    margin-top: 10px;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: #4f46e5;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-login button:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+
+/* ===== DESABAFO ===== */
+.desabafo-area {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.desabafo-area h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #222;
+}
+
+.desabafo-descricao {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* FORM */
+.desabafo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.desabafo-form label {
+    font-weight: 500;
+    color: #444;
+}
+
+.desabafo-form input[type="text"],
+.desabafo-form textarea {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.desabafo-form input:focus,
+.desabafo-form textarea:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79,70,229,0.2);
+}
+
+/* CHECKBOX */
+.anonimo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+/* BOTÃO */
+.desabafo-form button {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #4f46e5;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.desabafo-form button:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+}
+
+/* RESULTADO */
+.desabafo-resultado {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f5f7fa;
+    border-radius: 14px;
+}
+
+.desabafo-resultado h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.desabafo-resultado .autor {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.desabafo-resultado .mensagem {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.6;
+}
+
+
 
 /* ================= FOOTER ================= */
 footer {
