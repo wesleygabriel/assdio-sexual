@@ -469,6 +469,96 @@ nav a:hover {
     transform: translateY(-2px);
 }
 
+/* ================= CONTEÚDO COMPLETO ================= */
+.conteudo-completo {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    position: relative;
+    text-align: center;
+}
+
+/* IMAGEM */
+.conteudo-img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 18px;
+    margin: 30px 0;
+}
+
+/* TÍTULO */
+.conteudo-titulo {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+/* TEXTO */
+.conteudo-texto {
+    font-size: 18px;
+    line-height: 1.7;
+    color: #444;
+    text-align: justify;
+}
+
+/* ================= BOTÃO VOLTAR ================= */
+.btn-voltar {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    text-decoration: none;
+    background: #4f46e5;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-voltar:hover {
+    background: #3730a3;
+    transform: translateX(-4px);
+}
+
+/* ================= ANIMAÇÃO DE ENTRADA ================= */
+.animar {
+    animation: fadeUp 0.7s ease-out;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= RESPONSIVO ================= */
+@media (max-width: 768px) {
+    .conteudo-completo {
+        padding: 25px;
+    }
+
+    .conteudo-titulo {
+        font-size: 26px;
+    }
+
+    .conteudo-texto {
+        font-size: 16px;
+    }
+
+    .btn-voltar {
+        position: static;
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+}
 
 
 

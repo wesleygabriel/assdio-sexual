@@ -3,12 +3,21 @@
 
 {% block content %}
 
-<div class="conteudo-completo">
-    <img src="{{ url_for('static', filename=banner.imagem) }}">
-    <h2>{{ banner.titulo }}</h2>
-    <p>{{ banner.descricao_completa }}</p>
+<div class="conteudo-completo animar">
+
+    <a href="{{ url_for('index') }}" class="btn-voltar">← Voltar</a>
+
+    <img 
+        src="{{ url_for('static', filename=banner.imagem) }}"
+        class="conteudo-img"
+        alt="{{ banner.titulo }}"
+    >
+
+    <h2 class="conteudo-titulo">{{ banner.titulo }}</h2>
+
+    <p class="conteudo-texto">
+        {{ banner.descricao_completa }}
+    </p>
 </div>
 
 {% endblock %}
-
-

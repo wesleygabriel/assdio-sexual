@@ -10,31 +10,118 @@ banners = [
         "id": 1,
         "titulo": "Assédio no Trabalho",
         "descricao_curta": "Entenda o que é assédio no ambiente de trabalho.",
-        "descricao_completa": "Texto completo sobre assédio no trabalho.",
+        "descricao_completa": (
+            "O assédio no trabalho ocorre quando um funcionário é exposto, de forma "
+            "repetitiva ou contínua, a situações humilhantes, constrangedoras ou "
+            "ameaçadoras durante o exercício de suas funções. Essas atitudes podem "
+            "partir de superiores hierárquicos, colegas ou até clientes, e incluem "
+            "ofensas verbais, cobranças excessivas, isolamento, desvalorização "
+            "profissional ou abusos de poder. O assédio prejudica a saúde mental, "
+            "emocional e física do trabalhador, além de afetar o ambiente organizacional, "
+            "tornando essencial a conscientização, a prevenção e a denúncia dessas práticas."
+        ),
         "imagem": "images/banner1.jpg"
     },
     {
         "id": 2,
         "titulo": "Assédio Escolar",
         "descricao_curta": "Como identificar e denunciar o assédio escolar.",
-        "descricao_completa": "Texto completo sobre assédio escolar.",
+        "descricao_completa": (
+            "O assédio escolar, também conhecido como bullying, envolve comportamentos "
+            "repetidos de agressão física, verbal ou psicológica entre estudantes. "
+            "Essas ações podem incluir apelidos ofensivos, exclusão social, ameaças, "
+            "agressões físicas ou humilhações públicas. O assédio escolar afeta "
+            "diretamente o desenvolvimento emocional, o rendimento acadêmico e a "
+            "autoestima das vítimas, podendo gerar consequências graves se não for "
+            "identificado e combatido adequadamente."
+        ),
         "imagem": "images/banner2.jpg"
     },
     {
         "id": 3,
         "titulo": "Assédio Online",
         "descricao_curta": "Os perigos do assédio nas redes sociais.",
-        "descricao_completa": "Texto completo sobre assédio online.",
+        "descricao_completa": (
+            "O assédio online ocorre no ambiente digital, principalmente em redes sociais, "
+            "aplicativos de mensagens e plataformas virtuais. Ele se manifesta por meio "
+            "de comentários ofensivos, ameaças, perseguição, exposição de informações "
+            "pessoais ou disseminação de mensagens de ódio. Apesar de acontecer no meio "
+            "virtual, o assédio online causa impactos reais na saúde emocional das vítimas, "
+            "podendo gerar ansiedade, medo e isolamento social."
+        ),
         "imagem": "images/banner3.jpg"
     },
     {
         "id": 4,
         "titulo": "Tipos de Assédio",
         "descricao_curta": "Conheça os principais tipos de assédio.",
-        "descricao_completa": "Descrição completa sobre os tipos de assédio.",
+        "descricao_completa": (
+            "O assédio pode ocorrer de diversas formas, como assédio moral, sexual, "
+            "psicológico, institucional ou virtual. Cada tipo possui características "
+            "específicas, mas todos têm em comum o desrespeito à dignidade humana. "
+            "Reconhecer os diferentes tipos de assédio é fundamental para identificar "
+            "situações abusivas, proteger as vítimas e promover ambientes mais seguros, "
+            "respeitosos e justos."
+        ),
         "imagem": "images/banner4.jpg"
+    },
+    {
+        "id": 5,
+        "titulo": "Assédio Moral",
+        "descricao_curta": "Práticas abusivas que afetam a dignidade da vítima.",
+        "descricao_completa": (
+            "O assédio moral consiste em atitudes repetitivas que visam humilhar, "
+            "desqualificar ou desestabilizar emocionalmente uma pessoa. Ele pode ocorrer "
+            "por meio de críticas constantes, exposição ao ridículo, isolamento, "
+            "ameaças veladas ou excesso de cobranças. Esse tipo de assédio compromete "
+            "a saúde mental da vítima e pode gerar sentimentos de medo, insegurança "
+            "e baixa autoestima."
+        ),
+        "imagem": "images/banner5.jpg"
+    },
+    {
+        "id": 6,
+        "titulo": "Assédio Sexual",
+        "descricao_curta": "Condutas inadequadas de cunho sexual.",
+        "descricao_completa": (
+            "O assédio sexual envolve comportamentos indesejados de natureza sexual, "
+            "como comentários, insinuações, gestos, contatos físicos ou chantagens. "
+            "Ele pode ocorrer em ambientes de trabalho, estudo ou em espaços públicos, "
+            "causando constrangimento, medo e sofrimento à vítima. O assédio sexual "
+            "é crime e deve ser denunciado para garantir a proteção e os direitos "
+            "da pessoa afetada."
+        ),
+        "imagem": "images/banner6.jpg"
+    },
+    {
+        "id": 7,
+        "titulo": "Consequências do Assédio",
+        "descricao_curta": "Impactos do assédio na vida das vítimas.",
+        "descricao_completa": (
+            "As consequências do assédio podem ser profundas e duradouras, afetando "
+            "a saúde mental, emocional e física da vítima. Entre os impactos mais "
+            "comuns estão ansiedade, estresse, queda de autoestima, dificuldades "
+            "de relacionamento e problemas de desempenho escolar ou profissional. "
+            "Por isso, é fundamental reconhecer os sinais e buscar apoio."
+        ),
+        "imagem": "images/banner7.jpg"
+    },
+    {
+        "id": 8,
+        "titulo": "Como Denunciar o Assédio",
+        "descricao_curta": "Saiba quais passos seguir para denunciar.",
+        "descricao_completa": (
+            "Denunciar o assédio é um passo importante para interromper práticas "
+            "abusivas e proteger outras pessoas. A vítima pode buscar apoio em "
+            "instituições, canais oficiais, responsáveis legais ou órgãos competentes. "
+            "Registrar provas, procurar orientação e não se silenciar são atitudes "
+            "essenciais para o enfrentamento do assédio."
+        ),
+        "imagem": "images/banner8.jpg"
     }
 ]
+
+
 
 # 🔹 ROTAS PRINCIPAIS
 @app.route("/")
