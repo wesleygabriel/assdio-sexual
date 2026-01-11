@@ -1,28 +1,46 @@
 {% extends "base.html" %}
 
-{% block title %}Formulário{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
 
 <section class="form-container">
-    <h2>Formulário de login</h2>
+    <h2>Acesso ao Sistema</h2>
 
     <p class="form-texto">
-        Preencha os dados abaixo para realizar seu login.
+        Faça login para acessar áreas restritas do site, como o espaço de desabafo.
     </p>
 
-    <form method="post" action="/enviar" class="form-login">
+    <form method="post" action="{{ url_for('login') }}" class="form-login">
 
         <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+        <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Digite seu nome"
+            required
+        >
 
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Digite seu email"
+            required
+        >
 
         <label for="senha">Senha</label>
-        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+        <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Digite sua senha"
+            required
+        >
 
-        <button type="submit">login</button>
+        <button type="submit">Entrar</button>
     </form>
 </section>
 

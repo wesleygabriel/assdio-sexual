@@ -1,7 +1,8 @@
 import os
-from flask import Flask, render_template, abort, request
+from flask import Flask, render_template, abort, request, session, redirect, url_for
 
 app = Flask(__name__)
+app.secret_key = "chave-secreta-do-projeto"  # 🔐 obrigatória para session
 
 # 🔹 LISTA DE BANNERS
 banners = [
@@ -44,15 +45,44 @@ def index():
 def contact():
     return render_template("contact.html")
 
-@app.route("/login")
+# 🔹 LOGIN (simples)
+@app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        # login fictício (exemplo)
+        session["usuario_logado"] = True
+        return redirect(url_for("desabafo"))
+
     return render_template("login.html")
 
-@app.route("/desabafo")
-def desabafo():
-    return render_template("desabafo.html")
+@app.route("/logout")
+def logout():
+    session.pop("usuario_logado", None)
+    return redirect(url_for("index"))
 
-# 🔹 ROTA DE PESQUISA
+# 🔹 DESABAFO (PROTEGIDO)
+@app.route("/desabafo", methods=["GET", "POST"])
+def desabafo():
+    if not session.get("usuario_logado"):
+        return render_template("desabafo_bloqueado.html")
+
+    mensagem = None
+    nome = None
+    anonimo = False
+
+    if request.method == "POST":
+        nome = request.form.get("nome")
+        anonimo = request.form.get("anonimo")
+        mensagem = request.form.get("mensagem")
+
+    return render_template(
+        "desabafo.html",
+        mensagem=mensagem,
+        nome=nome,
+        anonimo=anonimo
+    )
+
+# 🔹 PESQUISA
 @app.route("/pesquisa")
 def pesquisa():
     termo = request.args.get("q", "").lower()
@@ -69,7 +99,7 @@ def pesquisa():
         resultados=resultados
     )
 
-# 🔹 ROTA DO CONTEÚDO COMPLETO
+# 🔹 CONTEÚDO COMPLETO
 @app.route("/conteudo/<int:id>")
 def conteudo(id):
     banner = next((b for b in banners if b["id"] == id), None)
