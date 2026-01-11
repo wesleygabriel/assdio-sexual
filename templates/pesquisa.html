@@ -1,24 +1,41 @@
 {% extends "base.html" %}
 
+{% block title %}Pesquisa{% endblock %}
+
 {% block content %}
-<h2>Resultados da pesquisa</h2>
+<section class="pesquisa-container">
 
-{% if resultados %}
-    <div class="cards">
-        {% for banner in resultados %}
-            <div class="card">
-                <img src="{{ url_for('static', filename=banner.imagem) }}">
-                <h3>{{ banner.titulo }}</h3>
-                <p>{{ banner.descricao_curta }}</p>
+    <h2>Resultados da pesquisa</h2>
 
-                <a href="{{ url_for('conteudo', id=banner.id) }}">
-                    Ler mais
-                </a>
-            </div>
-        {% endfor %}
-    </div>
-{% else %}
-    <p>Nenhum resultado encontrado.</p>
-{% endif %}
+    {% if resultados %}
+        <div class="cards">
+            {% for banner in resultados %}
+                <div class="card">
+                    <img src="{{ url_for('static', filename=banner.imagem) }}" alt="{{ banner.titulo }}">
 
+                    <h3>
+                        {{ banner.titulo
+                        | replace(termo, '<span class="destaque">' ~ termo ~ '</span>')
+                        | safe }}
+                    </h3>
+
+                    <p>
+                        {{ banner.descricao_curta
+                        | replace(termo, '<span class="destaque">' ~ termo ~ '</span>')
+                        | safe }}
+                    </p>
+
+                    <a href="{{ url_for('conteudo', id=banner.id) }}" class="btn-ler">
+                        Ler mais
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="nenhum-resultado">
+            Nenhum resultado encontrado para "<strong>{{ termo }}</strong>".
+        </p>
+    {% endif %}
+
+</section>
 {% endblock %}
