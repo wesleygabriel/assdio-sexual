@@ -40,6 +40,14 @@
             <i class="fa-solid fa-comment"></i>
             <span>Desabafo</span>
         </a>
+
+      
+        {% if session.get("usuario_logado") %}
+            <a href="{{ url_for('logout') }}" class="btn-logout">Sair</a>
+        {% endif %}
+    
     </nav>
+
+    
 
 </header>

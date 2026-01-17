@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, abort, request, session, redirect, url_for
+from flask import Flask, render_template, abort, request, session, redirect, url_for, flash
 
 app = Flask(__name__)
 app.secret_key = "chave-secreta-do-projeto"  # 🔐 obrigatória para session
@@ -121,9 +121,9 @@ banners = [
     }
 ]
 
+# rota principal
 
 
-# 🔹 ROTAS PRINCIPAIS
 @app.route("/")
 def index():
     return render_template("index.html", banners=banners)
@@ -132,26 +132,53 @@ def index():
 def contact():
     return render_template("contact.html")
 
-# 🔹 LOGIN (simples)
+# ===============================
+# 🔹 LOGIN (SIMPLES)
+# ===============================
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    # 🔒 se já estiver logado
+    if session.get("usuario_logado"):
+        flash("Você já está logado.")
+        return redirect(url_for("index"))
+        # ou: return redirect(url_for("desabafo"))
+
     if request.method == "POST":
-        # login fictício (exemplo)
+        # login fictício
         session["usuario_logado"] = True
-        return redirect(url_for("desabafo"))
+
+        # redirecionamento pós-login (se veio do desabafo bloqueado)
+        destino = session.pop("destino_pos_login", None)
+        flash("Login realizado com sucesso!")
+
+        if destino:
+            return redirect(destino)
+
+        return redirect(url_for("index"))
 
     return render_template("login.html")
+
+
+# ===============================
+# 🔹 LOGOUT
+# ===============================
 
 @app.route("/logout")
 def logout():
     session.pop("usuario_logado", None)
     return redirect(url_for("index"))
 
+# ===============================
 # 🔹 DESABAFO (PROTEGIDO)
+# ===============================
+
 @app.route("/desabafo", methods=["GET", "POST"])
 def desabafo():
     if not session.get("usuario_logado"):
-        return render_template("desabafo_bloqueado.html")
+        # salva tentativa de acesso
+        session["proxima_pagina"] = url_for("desabafo")
+        return render_template("desabafos_bloqueado.html")
 
     mensagem = None
     nome = None
@@ -169,7 +196,10 @@ def desabafo():
         anonimo=anonimo
     )
 
+# ===============================
 # 🔹 PESQUISA
+# ===============================
+
 @app.route("/pesquisa")
 def pesquisa():
     termo = request.args.get("q", "").lower()
@@ -186,16 +216,24 @@ def pesquisa():
         resultados=resultados
     )
 
+# ===============================
 # 🔹 CONTEÚDO COMPLETO
+# ===============================
+
 @app.route("/conteudo/<int:id>")
 def conteudo(id):
     banner = next((b for b in banners if b["id"] == id), None)
     if not banner:
         abort(404)
+
     return render_template("conteudo.html", banner=banner)
 
+# ===============================
+# 🔹 EXECUÇÃO
+# ===============================
+
 def main():
-    app.run(port=int(os.environ.get('PORT', 5001)), debug=True)
+    app.run(port=int(os.environ.get("PORT", 5001)), debug=True)
 
 if __name__ == "__main__":
     main()
