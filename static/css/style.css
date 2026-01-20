@@ -541,26 +541,6 @@ nav a:hover {
     }
 }
 
-/* ================= RESPONSIVO ================= */
-@media (max-width: 768px) {
-    .conteudo-completo {
-        padding: 25px;
-    }
-
-    .conteudo-titulo {
-        font-size: 26px;
-    }
-
-    .conteudo-texto {
-        font-size: 16px;
-    }
-
-    .btn-voltar {
-        position: static;
-        display: inline-block;
-        margin-bottom: 15px;
-    }
-}
 
 /* ================= PESQUISA ================= */
 
@@ -661,17 +641,6 @@ nav a:hover {
 }
 
 
-/* RESPONSIVO */
-@media (max-width: 600px) {
-    .pesquisa-container h2 {
-        font-size: 22px;
-    }
-
-    .card img {
-        height: 140px;
-    }
-}
-
 
 /* ================= MENSAGEM ================= */
 .flash-container {
@@ -719,6 +688,286 @@ nav a:hover {
 .btn-logout:hover {
     background: #b91c1c;
 }
+
+/* ================= BOTA PRA FORA ================= */
+.bota-fora {
+    max-width: 1000px;
+    margin: 80px auto;
+    padding: 50px;
+    background: #f5f3ff;
+    border-radius: 26px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.bota-fora h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #5b21b6;
+    margin-bottom: 20px;
+}
+
+.bota-texto {
+    text-align: center;
+    font-size: 18px;
+    color: #444;
+    margin-bottom: 40px;
+}
+
+/* ITENS */
+.bota-itens {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.bota-item {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.bota-item:hover {
+    transform: translateY(-6px);
+}
+
+/* ÍCONES */
+.icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    background: #5b21b6;
+    color: white;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.bota-item p {
+    font-size: 16px;
+    color: #333;
+}
+
+
+
+/* ================= PASSO A PASSO DENÚNCIA ================= */
+.passo-denuncia {
+    max-width: 1000px;
+    margin: 70px auto;
+    background: #ffffff;
+    padding: 45px;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* TÍTULO */
+.passo-denuncia h2 {
+    text-align: center;
+    font-size: 30px;
+    color: #4f46e5;
+    margin-bottom: 35px;
+}
+
+/* LISTA COM CONTADOR */
+.passos {
+    list-style: none;              /* remove numeração padrão */
+    counter-reset: passo;          /* inicia contador */
+    padding: 0;
+}
+
+/* ITEM */
+.passos li {
+    counter-increment: passo;      /* incrementa número */
+    background: #f5f7fa;
+    border-radius: 18px;
+    padding: 24px 28px 24px 78px;   /* espaço pro círculo */
+    margin-bottom: 20px;
+    position: relative;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* CÍRCULO COM NÚMERO */
+.passos li::before {
+    content: counter(passo);       /* número automático */
+    position: absolute;
+    left: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: #4f46e5;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* DESTAQUE DO TÍTULO DO PASSO */
+.passos li strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #1f2933;
+}
+
+/* ================= DESABAFA INDEX ================= */
+.desabafa-index {
+    max-width: 1000px;
+    margin: 80px auto;
+    background: #ffffff;
+    padding: 50px 30px;
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.desabafa-index h2 {
+    font-size: 30px;
+    color: #4f46e5;
+    margin-bottom: 10px;
+}
+
+.desabafa-index p {
+    font-size: 16px;
+    color: #555;
+    max-width: 650px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+}
+
+/* CARDS */
+.desabafa-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.desabafa-card {
+    padding: 30px 20px;
+    border-radius: 18px;
+    background: #f5f7fa;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.desabafa-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* ÍCONES */
+.desabafa-card .icon {
+    font-size: 42px;
+    color: #4f46e5;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.desabafa-card h3 {
+    font-size: 18px;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.desabafa-card p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* BOTÃO */
+.btn-desabafo {
+    display: inline-block;
+    padding: 14px 32px;
+    background: #4f46e5;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 14px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-desabafo:hover {
+    background: #4338ca;
+    transform: translateY(-2px);
+}
+
+
+/* ================= NOTÍCIAS ================= */
+.noticia-container {
+    max-width: 1100px;
+    margin: 90px auto;
+    background: #ffffff;
+    padding: 50px;
+    border-radius: 26px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.noticia-titulo {
+    font-size: 32px;
+    color: #4f46e5;
+    margin-bottom: 10px;
+}
+
+.noticia-texto {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 35px;
+}
+
+/* CARROSSEL */
+.noticia-carrossel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* VIDEO */
+.noticia-video {
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.noticia-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* BOTÕES */
+.noticia-btn {
+    background: #f1f3f6;
+    border: none;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.noticia-btn:hover {
+    background: #4f46e5;
+    color: white;
+    transform: scale(1.1);
+}
+
+
 
 
 /* ================= FOOTER ================= */

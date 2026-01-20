@@ -3,6 +3,7 @@
 {% block title %}Início{% endblock %}
 
 {% block content %}
+
 <div class="banner-container">
 
     <button class="banner-btn banner-prev" onclick="anterior()">◀</button>
@@ -23,6 +24,148 @@
     <button class="banner-btn banner-next" onclick="proximo()">▶</button>
 
 </div>
+
+<!-- TEXTO DO SITE -->
+<section class="bota-fora">
+    <h2>🥾 O que é o Bota Pra Fora?</h2>
+
+    <p class="bota-texto">
+        O <strong>Bota Pra Fora</strong> é um espaço criado para acolher,
+        orientar e ajudar pessoas que passaram por situações de assédio,
+        oferecendo informação, apoio e caminhos seguros para denúncia.
+    </p>
+
+    <div class="bota-itens">
+        <div class="bota-item">
+            <span class="icone">🛡️</span>
+            <p>Promove a conscientização sobre o assédio e seus impactos.</p>
+        </div>
+
+        <div class="bota-item">
+            <span class="icone">🫂</span>
+            <p>Oferece um espaço seguro para desabafar e ser ouvido.</p>
+        </div>
+
+        <div class="bota-item">
+            <span class="icone">📢</span>
+            <p>Incentiva a denúncia de qualquer forma de assédio.</p>
+        </div>
+
+        <div class="bota-item">
+            <span class="icone">⚖️</span>
+            <p>Informa sobre direitos e formas de buscar ajuda.</p>
+        </div>
+    </div>
+</section>
+
+
+<section class="passo-denuncia animar">
+    <h2>Como denunciar qualquer tipo de assédio</h2>
+
+    <ol class="passos">
+        <li>
+            <strong>Reconheça o assédio</strong><br>
+            O assédio pode ser verbal, psicológico, físico, sexual ou online. 
+            Se a situação causa medo, constrangimento ou humilhação, ela não é normal.
+        </li>
+
+        <li>
+            <strong>Guarde provas</strong><br>
+            Salve mensagens, e-mails, prints, áudios, fotos ou qualquer registro 
+            que comprove o ocorrido.
+        </li>
+
+        <li>
+            <strong>Procure ajuda</strong><br>
+            Converse com alguém de confiança, como familiares, professores, gestores 
+            ou orientadores.
+        </li>
+
+        <li>
+            <strong>Denuncie nos canais corretos</strong><br>
+            A denúncia pode ser feita em escolas, empresas, plataformas digitais 
+            ou órgãos oficiais.
+        </li>
+
+        <li>
+            <strong>Use este espaço com segurança</strong><br>
+            Se sentir necessidade, utilize o espaço de desabafo do site para 
+            compartilhar sua experiência de forma segura e consciente.
+        </li>
+    </ol>
+</section>
+
+<section class="desabafa-index">
+    <h2>Precisa desabafar?</h2>
+    <p>
+        Aqui você pode falar sobre o que está passando de forma segura.
+        Seu desabafo pode ser anônimo e ninguém será julgado.
+    </p>
+
+    <div class="desabafa-cards">
+        <div class="desabafa-card">
+            <i class="icon">💬</i>
+            <h3>Fale</h3>
+            <p>Conte o que aconteceu com você.</p>
+        </div>
+
+        <div class="desabafa-card">
+            <i class="icon">🔒</i>
+            <h3>Com segurança</h3>
+            <p>Seu relato pode ser feito de forma anônima.</p>
+        </div>
+
+        <div class="desabafa-card">
+            <i class="icon">🤝</i>
+            <h3>Não está sozinho</h3>
+            <p>Você merece apoio e respeito.</p>
+        </div>
+    </div>
+
+    <a href="{{ url_for('desabafo') }}" class="btn-desabafo">
+        Ir para o desabafo
+    </a>
+</section>
+
+
+<section class="noticia-container">
+
+    <h2 class="noticia-titulo">Notícias e Vídeos de Ultima Hora</h2>
+    <p class="noticia-texto">
+       Notícias sobre assédio de Ultima hora.
+    </p>
+
+    <div class="noticia-carrossel">
+
+        <button class="noticia-btn" onclick="videoAnterior()">◀</button>
+
+        <div class="noticia-video">
+            <iframe
+                id="video-frame"
+                src="https://www.youtube.com/embed/vph2Id-5ikE?si=_12K-_wdmMnmAeWa"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <button class="noticia-btn" onclick="videoProximo()">▶</button>
+
+    </div>
+</section>
+
+<!-- lista de vídeos (igual banners) -->
+<script>
+    window.VIDEOS = [
+        "https://www.youtube.com/embed/vph2Id-5ikE?si=_12K-_wdmMnmAeWa",
+        "https://www.youtube.com/embed/nY8sPW2cfHw?si=Q3SIYfzNgPy72Llj",
+        "https://www.youtube.com/embed/AfUKYbvHRx4?si=VpOuGcPtildQHrO5",
+        "https://www.youtube.com/embed/S9y8RboTcX4?si=HtuWmB6Gkn-UMK5E",
+        "https://www.youtube.com/embed/DapG8NrOoPI?si=9_YecOV7o4bhWuMU"
+
+    ];
+</script>
+
+<script src="{{ url_for('static', filename='js/videos.js') }}"></script>
+
 
 
 <!-- ✅ AQUI PODE -->
