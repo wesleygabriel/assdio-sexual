@@ -1,0 +1,13 @@
+<section class="outros-desabafos">
+    <h2>Meu histórico de desabafos</h2>
+
+    {% for d in desabafos %}
+    <div class="desabafo-card">
+        <p>{{ d.mensagem }}</p>
+
+        <form method="post" action="/excluir_desabafo/{{ d.id }}">
+            <button class="btn-excluir">🗑 Excluir</button>
+        </form>
+    </div>
+    {% endfor %}
+</section>

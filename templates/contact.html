@@ -8,25 +8,40 @@
 
     <h2>Formulário de Contato</h2>
 
-    <!-- TEXTO CURTO -->
     <p class="contato-texto">
-        Tem alguma dúvida, sugestão ou precisa de ajuda?  
+        Tem alguma dúvida, sugestão ou precisa de ajuda?
         Preencha o formulário abaixo e entraremos em contato o mais breve possível.
     </p>
 
-    <form class="contato-form">
-        <label>Nome</label>
-        <input type="text" placeholder="Digite seu nome">
+    <form class="contato-form" id="contatoForm" method="POST">
 
-        <label>Email</label>
-        <input type="email" placeholder="Digite seu email">
+        <h2>Entre em contato</h2>
+
+        <label>Nome</label>
+        <input type="text" name="nome" id="nome">
+
+        <label>E-mail</label>
+        <input type="email" name="email" id="email">
 
         <label>Mensagem</label>
-        <textarea placeholder="Escreva sua mensagem"></textarea>
+        <textarea name="mensagem" id="mensagem" rows="5"></textarea>
+
+        <p class="msg-erro" id="erroMsg" style="display:none;"></p>
 
         <button type="submit">Enviar mensagem</button>
+
+        {% if enviado %}
+            <p class="msg-sucesso">Mensagem enviada com sucesso!</p>
+        {% endif %}
+
+        {% if erro %}
+            <p class="msg-erro">Erro ao enviar mensagem. Tente novamente.</p>
+        {% endif %}
     </form>
 
 </section>
+
+<!-- JS de validação -->
+<script src="{{ url_for('static', filename='js/contato.js') }}"></script>
 
 {% endblock %}

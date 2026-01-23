@@ -1,0 +1,12 @@
+<h1>Desabafos Públicos</h1>
+
+{% if desabafos %}
+    {% for d in desabafos %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+            <p>{{ d.mensagem }}</p>
+            <small>{{ d.autor }}</small>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>Nenhum desabafo ainda.</p>
+{% endif %}

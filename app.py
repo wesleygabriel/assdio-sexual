@@ -1,8 +1,12 @@
 import os
 from flask import Flask, render_template, abort, request, session, redirect, url_for, flash
+import smtplib
+from email.message import EmailMessage
 
 app = Flask(__name__)
 app.secret_key = "chave-secreta-do-projeto"  # 🔐 obrigatória para session
+
+
 
 # 🔹 LISTA DE BANNERS
 banners = [
@@ -121,6 +125,10 @@ banners = [
     }
 ]
 
+
+
+
+
 # rota principal
 
 
@@ -128,9 +136,39 @@ banners = [
 def index():
     return render_template("index.html", banners=banners)
 
-@app.route("/contato")
+@app.route("/contato", methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html")
+    enviado = False
+
+    if request.method == "POST":
+        nome = request.form["nome"]
+        email = request.form["email"]
+        mensagem = request.form["mensagem"]
+
+        msg = EmailMessage()
+        msg["Subject"] = "Contato - Site Bota Pra Fora"
+        msg["From"] = "seu email"
+        msg["To"] = "seu email"
+        msg.set_content(f"""
+Nome: {nome}
+E-mail: {email}
+
+Mensagem:
+{mensagem}
+        """)
+
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+                smtp.login("seu email", "senha de app")
+                smtp.send_message(msg)
+
+            enviado = True
+
+        except Exception as e:
+            print(e)
+
+    return render_template("contact.html", enviado=enviado)
+
 
 # ===============================
 # 🔹 LOGIN (SIMPLES)
@@ -197,6 +235,43 @@ def desabafo():
     )
 
 # ===============================
+# 🔹 historicode desabafos
+# ===============================
+desabafos = []
+
+@app.route("/meus_desabafos")
+def meus_desabafos():
+    usuario = session.get("usuario_id")
+
+    meus = [d for d in desabafos if d["usuario"] == usuario]
+
+    return render_template("meus_desabafos.html", desabafos=meus)
+
+
+# ===============================
+# 🔹 excluir
+# ===============================
+
+@app.route("/excluir_desabafo/<int:id>", methods=["POST"])
+def excluir_desabafo(id):
+    global desabafos
+    usuario = session.get("usuario_id")
+
+    desabafos = [d for d in desabafos if not (d["id"] == id and d["usuario"] == usuario)]
+    return redirect(url_for("meus_desabafos"))
+
+# ===============================
+# 🔹 publico
+# ===============================
+@app.route("/desabafos_publicos")
+def desabafos_publicos():
+    return render_template(
+        "desabafos_publicos.html",
+        desabafos=desabafos
+    )
+
+
+# ===============================
 # 🔹 PESQUISA
 # ===============================
 
@@ -233,7 +308,7 @@ def conteudo(id):
 # ===============================
 
 def main():
-    app.run(port=int(os.environ.get("PORT", 5003)), debug=True)
+    app.run(port=int(os.environ.get("PORT", 5006)), debug=True)
 
 if __name__ == "__main__":
     main()
