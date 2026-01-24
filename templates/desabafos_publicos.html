@@ -1,12 +1,40 @@
-<h1>Desabafos Públicos</h1>
+{% extends "base.html" %}
+{% block title %}Desabafos Públicos{% endblock %}
 
-{% if desabafos %}
-    {% for d in desabafos %}
-        <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
-            <p>{{ d.mensagem }}</p>
-            <small>{{ d.autor }}</small>
+{% block content %}
+
+<div class="desabafos-container">
+
+    <h1 class="desabafos-title">Desabafos Públicos</h1>
+
+    {% if desabafos %}
+        {% for d in desabafos %}
+        <div class="desabafo-card">
+
+            <div class="desabafo-header">
+                <span class="desabafo-user">{{ d.user_name }}</span>
+                <span class="desabafo-date">
+                    {{ d.data.strftime('%d/%m/%Y') if d.data }}
+                </span>
+            </div>
+
+            <p class="desabafo-texto">
+                {{ d.texto }}
+            </p>
+
+            <!-- futuras reações -->
+            <div class="desabafo-reacoes">
+                <span>💙 Apoio</span>
+                <span>😢 Força</span>
+                <span>👏 Coragem</span>
+            </div>
+
         </div>
-    {% endfor %}
-{% else %}
-    <p>Nenhum desabafo ainda.</p>
-{% endif %}
+        {% endfor %}
+    {% else %}
+        <p class="desabafo-vazio">Nenhum desabafo publicado ainda.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

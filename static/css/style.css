@@ -1287,6 +1287,146 @@ footer {
    
 }
 
+
+
+/* =========================
+   CONTAINER PRINCIPAL
+========================= */
+.admin-usuarios-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* =========================
+   TÍTULOS
+========================= */
+.admin-usuarios-container h1 {
+    margin-bottom: 25px;
+    color: #2c2c2c;
+}
+
+.admin-usuarios-container h2 {
+    margin-bottom: 15px;
+    color: #444;
+}
+
+/* =========================
+   SEÇÕES
+========================= */
+.admin-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+/* =========================
+   FORMULÁRIO
+========================= */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 420px;
+}
+
+.admin-form label {
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.admin-form input,
+.admin-form select {
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.2s;
+}
+
+.admin-form input:focus,
+.admin-form select:focus {
+    border-color: #6b4eff;
+}
+
+/* BOTÃO FORM */
+.admin-form button {
+    margin-top: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #6b4eff;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.admin-form button:hover {
+    background: #593adf;
+}
+
+/* =========================
+   TABELA DE USUÁRIOS
+========================= */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.admin-table thead {
+    background: #f0f0f0;
+}
+
+.admin-table th,
+.admin-table td {
+    text-align: left;
+    padding: 12px;
+}
+
+.admin-table th {
+    font-weight: bold;
+    color: #333;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.admin-table tbody tr:hover {
+    background: #fafafa;
+}
+
+/* =========================
+   AÇÕES
+========================= */
+.admin-action {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.admin-action.delete {
+    color: #e74c3c;
+}
+
+.admin-action.delete:hover {
+    color: #c0392b;
+}
+
+/* =========================
+   LINKS GERAIS
+========================= */
+.admin-back {
+    display: inline-block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #6b4eff;
+}
+
+
 /* ================= RESPONSIVO ================= */
 @media (max-width: 900px) {
     .header {

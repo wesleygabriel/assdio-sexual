@@ -274,61 +274,107 @@ def logout():
 @app.route("/desabafo", methods=["GET", "POST"])
 def desabafo():
     if not session.get("usuario_logado"):
-        # salva tentativa de acesso
-        session["proxima_pagina"] = url_for("desabafo")
-        return render_template("desabafos_bloqueado.html")
-
-    mensagem = None
-    nome = None
-    anonimo = False
+        session["destino_pos_login"] = url_for("desabafo")
+        return redirect(url_for("login"))
 
     if request.method == "POST":
-        nome = request.form.get("nome")
-        anonimo = request.form.get("anonimo")
-        mensagem = request.form.get("mensagem")
+        texto = request.form.get("texto")
 
-    return render_template(
-        "desabafo.html",
-        mensagem=mensagem,
-        nome=nome,
-        anonimo=anonimo
-    )
+        if not texto:
+            flash("O desabafo não pode estar vazio.", "error")
+            return redirect(url_for("desabafo"))
+
+        db.collection("desabafos").add({
+            "user_id": session["usuario_id"],
+            "user_name": session["usuario_nome"],
+            "texto": texto,
+            "data": firestore.SERVER_TIMESTAMP,
+            "publico": True
+        })
+
+        flash("Desabafo enviado.", "success")
+        return redirect(url_for("desabafo"))
+
+    return render_template("desabafo.html")
 
 # ===============================
 # 🔹 historicode desabafos
 # ===============================
 desabafos = []
 
-@app.route("/meus_desabafos")
+@app.route("/meus-desabafos")
 def meus_desabafos():
-    usuario = session.get("usuario_id")
+    if not session.get("usuario_logado"):
+        return redirect(url_for("login"))
 
-    meus = [d for d in desabafos if d["usuario"] == usuario]
+    desabafos = []
 
-    return render_template("meus_desabafos.html", desabafos=meus)
+    docs = (
+        db.collection("desabafos")
+        .where("user_id", "==", session["usuario_id"])
+        .order_by("data", direction=firestore.Query.DESCENDING)
+        .stream()
+    )
+
+    for doc in docs:
+        d = doc.to_dict()
+        d["id"] = doc.id
+        desabafos.append(d)
+
+    return render_template("meus_desabafos.html", desabafos=desabafos)
+
 
 
 # ===============================
 # 🔹 excluir
 # ===============================
 
-@app.route("/excluir_desabafo/<int:id>", methods=["POST"])
+@app.route("/desabafo/excluir/<id>")
 def excluir_desabafo(id):
-    global desabafos
-    usuario = session.get("usuario_id")
+    if not session.get("usuario_logado"):
+        return redirect(url_for("login"))
 
-    desabafos = [d for d in desabafos if not (d["id"] == id and d["usuario"] == usuario)]
+    doc_ref = db.collection("desabafos").document(id)
+    doc = doc_ref.get()
+
+    if not doc.exists:
+        flash("Desabafo não encontrado.", "error")
+        return redirect(url_for("meus_desabafos"))
+
+    desabafo = doc.to_dict()
+
+    # 🔒 segurança: só o dono pode excluir
+    if desabafo["user_id"] != session["usuario_id"]:
+        flash("Acesso negado.", "error")
+        return redirect(url_for("index"))
+
+    doc_ref.delete()
+    flash("Desabafo excluído.", "success")
+
     return redirect(url_for("meus_desabafos"))
+
 
 # ===============================
 # 🔹 publico
 # ===============================
-@app.route("/desabafos_publicos")
+@app.route("/desabafosp-ublicos")
 def desabafos_publicos():
-    return render_template(
-        "desabafos_publicos.html",
-        desabafos=desabafos
+    desabafos = []
+
+    docs = (
+        db.collection("desabafos")
+        .where("publico", "==", True)
+        .order_by("data", direction=firestore.Query.DESCENDING)
+        .stream()
     )
+
+    for doc in docs:
+        d = doc.to_dict()
+        d["id"] = doc.id
+        desabafos.append(d)
+
+    return render_template("desabafos_publicos.html", desabafos=desabafos)
+
 
 
 # ===============================
@@ -364,24 +410,51 @@ def conteudo(id):
     return render_template("conteudo.html", banner=banner)
 
 
+def somente_admin():
+    return (
+        session.get("usuario_logado") is True
+        and session.get("usuario_role") == "admin"
+    )
+
 @app.route("/admin/usuarios")
 def admin_usuarios():
     if session.get("usuario_role") != "admin":
         flash("Acesso negado.", "error")
         return redirect(url_for("index"))
 
-    return render_template("admin_usuarios.html")
+    usuarios = []
+    docs = db.collection("user").stream()
+
+    for doc in docs:
+        u = doc.to_dict()
+        u["id"] = doc.id
+        usuarios.append(u)
+
+    return render_template("admin_usuarios.html", usuarios=usuarios)
+
 
 
 @app.route("/admin/usuarios/criar", methods=["POST"])
 def admin_criar_usuario():
     if not somente_admin():
+        flash("Acesso negado.", "error")
         return redirect(url_for("index"))
 
     nome = request.form.get("name")
     email = request.form.get("email")
     senha = request.form.get("password")
     role = request.form.get("role", "user")
+
+    # 🔒 validação básica
+    if not nome or not email or not senha:
+        flash("Preencha todos os campos.", "error")
+        return redirect(url_for("admin_usuarios"))
+
+    # ❗ evita email duplicado
+    existe = db.collection("user").where("email", "==", email).limit(1).get()
+    if existe:
+        flash("Email já cadastrado.", "error")
+        return redirect(url_for("admin_usuarios"))
 
     db.collection("user").add({
         "name": nome,
@@ -397,28 +470,51 @@ def admin_criar_usuario():
 @app.route("/admin/usuarios/excluir/<id>")
 def admin_excluir_usuario(id):
     if not somente_admin():
+        flash("Acesso negado.", "error")
         return redirect(url_for("index"))
 
+    # ❌ impede admin se excluir
+    if id == session.get("usuario_id"):
+        flash("Você não pode excluir seu próprio usuário.", "error")
+        return redirect(url_for("admin_usuarios"))
+
     db.collection("user").document(id).delete()
-    flash("Usuário excluído.", "success")
+
+    flash("Usuário excluído com sucesso.", "success")
     return redirect(url_for("admin_usuarios"))
 
 
 @app.route("/admin/desabafos")
 def admin_desabafos():
-    if not somente_admin():
+    if session.get("usuario_role") != "admin":
         flash("Acesso negado.", "error")
         return redirect(url_for("index"))
 
     desabafos = []
-    docs = db.collection("desabafos").order_by("data", direction=firestore.Query.DESCENDING).stream()
 
+    docs = (
+        db.collection("desabafos")
+        .order_by("data", direction=firestore.Query.DESCENDING)
+        .stream()
+    )
     for doc in docs:
         d = doc.to_dict()
         d["id"] = doc.id
         desabafos.append(d)
-
     return render_template("admin_desabafos.html", desabafos=desabafos)
+
+
+@app.route("/admin/desabafos/excluir/<id>")
+def admin_excluir_desabafo(id):
+    if session.get("usuario_role") != "admin":
+        return redirect(url_for("index"))
+
+    db.collection("desabafos").document(id).delete()
+    flash("Desabafo removido.", "success")
+
+    return redirect(url_for("admin_desabafos"))
+
+
 
 # ===============================
 # 🔹 EXECUÇÃO

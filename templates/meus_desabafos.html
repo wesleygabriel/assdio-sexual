@@ -1,13 +1,42 @@
-<section class="outros-desabafos">
-    <h2>Meu histórico de desabafos</h2>
+{% extends "base.html" %}
+{% block title %}Meus Desabafos{% endblock %}
 
-    {% for d in desabafos %}
-    <div class="desabafo-card">
-        <p>{{ d.mensagem }}</p>
+{% block content %}
 
-        <form method="post" action="/excluir_desabafo/{{ d.id }}">
-            <button class="btn-excluir">🗑 Excluir</button>
-        </form>
-    </div>
-    {% endfor %}
-</section>
+<div class="desabafos-container">
+
+    <h1 class="desabafos-title">Meus Desabafos</h1>
+
+    {% if desabafos %}
+        {% for d in desabafos %}
+        <div class="desabafo-card">
+
+            <div class="desabafo-header">
+                <span class="desabafo-date">
+                    {{ d.data.strftime('%d/%m/%Y') if d.data }}
+                </span>
+            </div>
+
+            <p class="desabafo-texto">
+                {{ d.texto }}
+            </p>
+
+            <div class="desabafo-acoes">
+                <a
+                  href="{{ url_for('excluir_desabafo', id=d.id) }}"
+                  class="desabafo-btn delete"
+                  onclick="return confirm('Deseja excluir este desabafo?')"
+                >
+                  Excluir
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="desabafo-vazio">Você ainda não enviou nenhum desabafo.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}
