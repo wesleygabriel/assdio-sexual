@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Painel do Administrador{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+    <!-- HEADER -->
+    <div class="admin-header">
+        <h1>Painel do Administrador</h1>
+
+        <div class="admin-user">
+            Olá, <strong>{{ session.usuario_nome }}</strong> |
+            <a href="{{ url_for('logout') }}">Sair</a>
+        </div>
+    </div>
+
+    <!-- MENSAGENS -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for categoria, msg in messages %}
+                {% if categoria == "success" %}
+                    <div class="admin-msg-sucesso">{{ msg }}</div>
+                {% elif categoria == "error" %}
+                    <div class="admin-msg-erro">{{ msg }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- GRID DE AÇÕES -->
+    <div class="admin-grid">
+
+        <!-- GERENCIAR USUÁRIOS -->
+        <div class="admin-card">
+            <h3>Usuários</h3>
+            <p>Cadastre, edite ou remova usuários do sistema.</p>
+            <a href="{{ url_for('admin_usuarios') }}">Gerenciar usuários</a>
+        </div>
+
+        <!-- DESABAFOS -->
+        <div class="admin-card">
+            <h3>Desabafos</h3>
+            <p>Visualize, modere e acompanhe os desabafos enviados.</p>
+            <a href="{{ url_for('admin_desabafos') }}">Ver desabafos</a>
+        </div>
+
+        <!-- BANNERS -->
+        <div class="admin-card">
+            <h3>Banners</h3>
+            <p>Atualize imagens e textos exibidos na página inicial.</p>
+            <a href="{{ url_for('admin_banners') }}">Gerenciar banners</a>
+        </div>
+
+        <!-- CONFIGURAÇÕES -->
+        <div class="admin-card">
+            <h3>Configurações</h3>
+            <p>Ajustes gerais do sistema e permissões.</p>
+            <a href="{{ url_for('admin_config') }}">Configurações</a>
+        </div>
+
+        <!-- VOLTAR AO SITE -->
+        <div class="admin-card">
+            <h3>Site</h3>
+            <p>Voltar para a visualização pública do site.</p>
+            <a href="{{ url_for('index') }}" class="btn-danger">Voltar ao site</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

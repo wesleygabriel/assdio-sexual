@@ -2,6 +2,19 @@ import os
 from flask import Flask, render_template, abort, request, session, redirect, url_for, flash
 import smtplib
 from email.message import EmailMessage
+from dotenv import load_dotenv
+
+load_dotenv() 
+
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+
+
+
+cred = credentials.Certificate(os.getenv("FIREBASE_CREDENTIALS"))
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 app = Flask(__name__)
 app.secret_key = "chave-secreta-do-projeto"  # 🔐 obrigatória para session
@@ -173,29 +186,76 @@ Mensagem:
 # ===============================
 # 🔹 LOGIN (SIMPLES)
 # ===============================
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    # 🔒 se já estiver logado
     if session.get("usuario_logado"):
-        flash("Você já está logado.")
+        flash("Você já está logado.", "info")
         return redirect(url_for("index"))
-        # ou: return redirect(url_for("desabafo"))
 
     if request.method == "POST":
-        # login fictício
+        email = request.form.get("email", "").strip()
+        senha = request.form.get("senha", "").strip()
+
+        print("📧 Email digitado:", repr(email))
+        print("🔑 Senha digitada:", repr(senha))
+
+        usuarios_ref = (
+            db.collection("user")
+            .where("email", "==", email)
+            .limit(1)
+        )
+
+        usuario = None
+        for u in usuarios_ref.stream():
+            usuario = u.to_dict()
+            usuario["id"] = u.id
+
+        print("👤 Usuário encontrado:", usuario)
+
+        if not usuario:
+            flash("Usuário não encontrado.", "error")
+            return render_template("login.html")
+
+        senha_bd = str(usuario.get("password", "")).strip()
+
+        print("🔐 Senha no Firestore:", repr(senha_bd))
+        print("⌨️ Senha digitada:", repr(senha))
+
+        if senha_bd != senha:
+            flash("Senha incorreta.", "error")
+            return render_template("login.html")
+
+        # ✅ LOGIN OK
         session["usuario_logado"] = True
+        session["usuario_id"] = usuario["id"]
+        session["usuario_nome"] = usuario.get("name", "")
+        session["usuario_role"] = usuario.get("role", "user")
 
-        # redirecionamento pós-login (se veio do desabafo bloqueado)
+        print("✅ Login OK | Role:", session["usuario_role"])
+
+        if session["usuario_role"] == "admin":
+            return redirect(url_for("admin"))
+
         destino = session.pop("destino_pos_login", None)
-        flash("Login realizado com sucesso!")
-
         if destino:
             return redirect(destino)
 
         return redirect(url_for("index"))
 
     return render_template("login.html")
+
+
+
+@app.route("/admin")
+def admin():
+    if not session.get("usuario_logado"):
+        return redirect(url_for("login"))
+
+    if session.get("usuario_role") != "admin":
+        abort(403)  # acesso negado
+
+    return render_template("admin.html")
+
 
 
 # ===============================
@@ -302,6 +362,63 @@ def conteudo(id):
         abort(404)
 
     return render_template("conteudo.html", banner=banner)
+
+
+@app.route("/admin/usuarios")
+def admin_usuarios():
+    if session.get("usuario_role") != "admin":
+        flash("Acesso negado.", "error")
+        return redirect(url_for("index"))
+
+    return render_template("admin_usuarios.html")
+
+
+@app.route("/admin/usuarios/criar", methods=["POST"])
+def admin_criar_usuario():
+    if not somente_admin():
+        return redirect(url_for("index"))
+
+    nome = request.form.get("name")
+    email = request.form.get("email")
+    senha = request.form.get("password")
+    role = request.form.get("role", "user")
+
+    db.collection("user").add({
+        "name": nome,
+        "email": email,
+        "password": senha,
+        "role": role
+    })
+
+    flash("Usuário criado com sucesso!", "success")
+    return redirect(url_for("admin_usuarios"))
+
+
+@app.route("/admin/usuarios/excluir/<id>")
+def admin_excluir_usuario(id):
+    if not somente_admin():
+        return redirect(url_for("index"))
+
+    db.collection("user").document(id).delete()
+    flash("Usuário excluído.", "success")
+    return redirect(url_for("admin_usuarios"))
+
+
+@app.route("/admin/desabafos")
+def admin_desabafos():
+    if not somente_admin():
+        flash("Acesso negado.", "error")
+        return redirect(url_for("index"))
+
+    desabafos = []
+    docs = db.collection("desabafos").order_by("data", direction=firestore.Query.DESCENDING).stream()
+
+    for doc in docs:
+        d = doc.to_dict()
+        d["id"] = doc.id
+        desabafos.append(d)
+
+    return render_template("admin_desabafos.html", desabafos=desabafos)
 
 # ===============================
 # 🔹 EXECUÇÃO
