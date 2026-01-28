@@ -13,47 +13,52 @@
         Seu desabafo será tratado com respeito.
     </p>
 
-    <form method="post" class="desabafo-form">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome">
+    <!-- FORMULÁRIO -->
+    <form
+    action="{{ url_for('enviar_desabafo') }}"
+    method="post"
+    class="desabafo-form"
+    id="desabafosForm"
+>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" class="input-nome">
 
-        <div class="anonimo">
-            <input type="checkbox" id="anonimo" name="anonimo">
-            <label for="anonimo">Enviar como anônimo</label>
-        </div>
+    <div class="anonimo">
+        <input type="checkbox" id="anonimo" name="anonimo">
+        <label for="anonimo">Enviar como anônimo</label>
+    </div>
 
-        <label for="mensagem">Seu desabafo:</label>
-        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+    <label for="mensagem">Seu desabafo:</label>
+    <textarea
+        id="mensagem"
+        name="mensagem"
+        rows="5"
+        class="textarea-desabafo"
+        required
+    ></textarea>
 
-        <button type="submit">Enviar</button>
-    </form>
+    <button type="submit" class="btn-enviar">Enviar</button>
+</form>
 
-    {% if mensagem %}
-        <hr>
 
-        <div class="desabafo-resultado">
-            <h3>Desabafo enviado</h3>
+    <!-- MENSAGEM DE ERRO / SUCESSO -->
+    <p id="status-desabafo" class="status-desabafo"></p>
 
-            <p class="autor">
-                <strong>
-                    {% if anonimo %}
-                        Anônimo
-                    {% else %}
-                        {{ nome }}
-                    {% endif %}
-                </strong>
-            </p>
-
-            <p class="mensagem">{{ mensagem }}</p>
-        </div>
-    {% endif %}
-
-       <!-- AÇÕES -->
-       <div class="acoes-desabafo">
-        <a href="/meus_desabafos" class="btn-secundario">📜 Meu histórico</a>
-        <a href="/desabafos_publicos" class="btn-secundario">💬 Ver outros desabafos</a>
-       </div>
-
+    <!-- AÇÕES -->
+    <div class="acoes-desabafo">
+        <a href="{{ url_for('meus_desabafos') }}" class="btn-secundario">
+            📜 Meu histórico
+        </a>
+    
+        <a href="{{ url_for('desabafos_publicos') }}" class="btn-secundario">
+            💬 Ver outros desabafos
+        </a>
+    </div>
+    
 </section>
+
+<!-- JS -->
+<script type="module" src="{{ url_for('static', filename='js/desabafos.js') }}"></script>
+
 
 {% endblock %}

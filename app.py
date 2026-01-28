@@ -3,6 +3,8 @@ from flask import Flask, render_template, abort, request, session, redirect, url
 import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
+from google.cloud import firestore
+import traceback
 
 load_dotenv() 
 
@@ -267,61 +269,84 @@ def logout():
     session.pop("usuario_logado", None)
     return redirect(url_for("index"))
 
+
+
+@app.route("/desabafo")
+def desabafo():
+    if not session.get("usuario_logado"):
+        return redirect(url_for("login"))
+
+    return render_template("desabafo.html")
+
+
 # ===============================
 # 🔹 DESABAFO (PROTEGIDO)
 # ===============================
 
-@app.route("/desabafo", methods=["GET", "POST"])
-def desabafo():
+@app.route("/enviar_desabafo", methods=["GET", "POST"])
+def enviar_desabafo():
     if not session.get("usuario_logado"):
         session["destino_pos_login"] = url_for("desabafo")
         return redirect(url_for("login"))
 
     if request.method == "POST":
-        texto = request.form.get("texto")
+        data = request.get_json()
 
-        if not texto:
-            flash("O desabafo não pode estar vazio.", "error")
-            return redirect(url_for("desabafo"))
+        mensagem = data.get("mensagem", "").strip()
+        anonimo = data.get("anonimo", False)
+        nome = data.get("nome", "").strip()
+
+        if not mensagem:
+            return {"erro": "Mensagem vazia"}, 400
+
+        autor = "Anônimo" if anonimo or not nome else nome
 
         db.collection("desabafos").add({
-            "user_id": session["usuario_id"],
-            "user_name": session["usuario_nome"],
-            "texto": texto,
-            "data": firestore.SERVER_TIMESTAMP,
-            "publico": True
+            "usuario_id": session["usuario_id"],
+            "autor": autor,
+            "mensagem": mensagem,
+            "anonimo": anonimo,
+            "apagado": False,
+            "criado_em": firestore.SERVER_TIMESTAMP
         })
 
-        flash("Desabafo enviado.", "success")
-        return redirect(url_for("desabafo"))
+        return {"sucesso": True}, 200
 
     return render_template("desabafo.html")
+
 
 # ===============================
 # 🔹 historicode desabafos
 # ===============================
-desabafos = []
 
-@app.route("/meus-desabafos")
+@app.route("/meus_desabafos")
 def meus_desabafos():
+
     if not session.get("usuario_logado"):
+        flash("Faça login para acessar seus desabafos.", "warning")
+        session["destino_pos_login"] = url_for("meus_desabafos")
         return redirect(url_for("login"))
 
-    desabafos = []
+    usuario_id = session["usuario_id"]
 
     docs = (
-        db.collection("desabafos")
-        .where("user_id", "==", session["usuario_id"])
-        .order_by("data", direction=firestore.Query.DESCENDING)
-        .stream()
-    )
+    db.collection("desabafos")
+    .where("usuario_id", "==", usuario_id)
+    .where("apagado", "==", False)
+    .order_by("criado_em", direction=firestore.Query.DESCENDING)
+    .stream()
+)
 
+
+    desabafos = []
     for doc in docs:
         d = doc.to_dict()
         d["id"] = doc.id
         desabafos.append(d)
 
     return render_template("meus_desabafos.html", desabafos=desabafos)
+
+
 
 
 
@@ -357,7 +382,7 @@ def excluir_desabafo(id):
 # ===============================
 # 🔹 publico
 # ===============================
-@app.route("/desabafosp-ublicos")
+@app.route("/desabafos-publicos")
 def desabafos_publicos():
     desabafos = []
 
@@ -521,7 +546,7 @@ def admin_excluir_desabafo(id):
 # ===============================
 
 def main():
-    app.run(port=int(os.environ.get("PORT", 5006)), debug=True)
+    app.run(port=int(os.environ.get("PORT", 5012)), debug=True)
 
 if __name__ == "__main__":
     main()
