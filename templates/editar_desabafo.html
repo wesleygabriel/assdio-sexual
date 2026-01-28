@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Editar Desabafo{% endblock %}
+
+{% block content %}
+<div class="editar-desabafos-container">
+
+    <h1>Editar desabafo</h1>
+
+    <form method="POST" action="{{ url_for('salvar_edicao_desabafo', id=desabafo.id) }}">
+
+        <textarea name="mensagem" required class="editar-desabafos-textarea">{{ desabafo.mensagem }}</textarea>
+
+        <div class="editar-desabafos-acoes">
+            <button type="submit" class="editar-desabafos-btn salvar">
+                Salvar alterações
+            </button>
+
+            <a href="{{ url_for('meus_desabafos') }}" class="editar-desabafos-btn cancelar">
+                Cancelar
+            </a>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

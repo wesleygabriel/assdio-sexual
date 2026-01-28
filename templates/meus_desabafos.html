@@ -3,7 +3,6 @@
 
 {% block content %}
 
-
 <div class="desabafos-container">
 
     <div class="voltar-historico">
@@ -12,9 +11,7 @@
         </a>
     </div>
 
-
     <h1 class="desabafos-title">Meus Desabafos</h1>
-
 
     {% if desabafos %}
         {% for d in desabafos %}
@@ -32,9 +29,22 @@
 
             <small class="desabafo-autor">
                 Por {{ d.autor }}
+                {% if d.editado_em %}
+                    <span class="desabafo-editado">(editado)</span>
+                {% endif %}
             </small>
 
             <div class="desabafo-acoes">
+
+                <!-- EDITAR -->
+                <a
+                  href="{{ url_for('editar_desabafo', id=d.id) }}"
+                  class="desabafo-btn edit"
+                >
+                  Editar
+                </a>
+
+                <!-- EXCLUIR -->
                 <a
                   href="{{ url_for('excluir_desabafo', id=d.id) }}"
                   class="desabafo-btn delete"
@@ -42,6 +52,7 @@
                 >
                   Excluir
                 </a>
+
             </div>
         </div>
         {% endfor %}

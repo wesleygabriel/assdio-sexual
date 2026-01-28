@@ -63,7 +63,7 @@ form.addEventListener("submit", async (e) => {
     await addDoc(collection(db, "user"), {
         name,
         email,
-        password,   // ⚠️ depois vamos criptografar
+        password,   
         isAdmin
     });
 

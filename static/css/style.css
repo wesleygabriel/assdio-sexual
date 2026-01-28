@@ -1576,6 +1576,96 @@ footer {
 
   
   
+/* CONTAINER */
+.editar-desabafos-container {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    
+}
+
+/* TÍTULO */
+.editar-desabafos-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
+}
+
+/* TEXTAREA */
+.editar-desabafos-textarea {
+    width: 90%; /* largura menor dentro do container */
+    min-height: 180px;
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text-main);
+    resize: vertical;
+    transition: all 0.25s ease;
+}
+
+
+.editar-desabafos-textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(138, 108, 240, 0.2);
+    outline: none;
+}
+
+/* AÇÕES DO FORMULÁRIO */
+.editar-desabafos-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* BOTÕES */
+.editar-desabafos-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* BOTÃO SALVAR */
+.editar-desabafos-btn.salvar {
+    background:  linear-gradient(135deg, #7a5cff, #9f8cff);
+    color: white;
+    box-shadow: 0 10px 25px rgba(138, 108, 240, 0.35);
+}
+
+.editar-desabafos-btn.salvar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 35px rgba(138, 108, 240, 0.45);
+}
+
+/* BOTÃO CANCELAR */
+.editar-desabafos-btn.cancelar {
+    background: rgba(255, 107, 107, 0.15);
+    color: var(--danger);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+}
+
+.editar-desabafos-btn.cancelar:hover {
+    background: var(--danger);
+    color: white;
+    transform: scale(1.05);
+}
+
+
 
 
 

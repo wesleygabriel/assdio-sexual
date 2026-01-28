@@ -270,13 +270,14 @@ def logout():
     return redirect(url_for("index"))
 
 
-
-@app.route("/desabafo")
+@app.route("/desabafo", methods=["GET", "POST"])
 def desabafo():
     if not session.get("usuario_logado"):
-        return redirect(url_for("login"))
+        session["destino_pos_login"] = url_for("desabafo")
+        return render_template("desabafos_bloqueado.html")
 
     return render_template("desabafo.html")
+
 
 
 # ===============================
@@ -404,6 +405,77 @@ def desabafos_publicos():
 
     return render_template("desabafos_publicos.html", desabafos=desabafos)
 
+
+
+@app.route("/desabafos/editar/<id>", methods=["GET", "POST"])
+def editar_desabafo(id):
+    if not session.get("usuario_logado"):
+        flash("Faça login para editar um desabafo.", "error")
+        return redirect(url_for("login"))
+
+    ref = db.collection("desabafos").document(id)
+    doc = ref.get()
+
+    if not doc.exists:
+        flash("Desabafo não encontrado.", "error")
+        return redirect(url_for("meus_desabafos"))
+
+    desabafo = doc.to_dict()
+
+    # 🔐 PERMISSÃO
+    if desabafo.get("usuario_id") != session.get("usuario_id"):
+        flash("Você não tem permissão para editar este desabafo.", "error")
+        return redirect(url_for("meus_desabafos"))
+
+    if request.method == "POST":
+        nova_mensagem = request.form.get("mensagem", "").strip()
+
+        if not nova_mensagem:
+            flash("O texto não pode ficar vazio.", "error")
+            return render_template("editar_desabafo.html", desabafo=desabafo)
+
+        ref.update({
+            "mensagem": nova_mensagem,
+            "editado_em": datetime.now()
+        })
+
+        flash("Desabafo editado com sucesso.", "success")
+        return redirect(url_for("meus_desabafos"))
+
+    desabafo["id"] = id
+    return render_template("editar_desabafo.html", desabafo=desabafo)
+
+
+
+
+@app.route("/desabafo/salvar/<id>", methods=["POST"])
+def salvar_edicao_desabafo(id):
+    if not session.get("usuario_logado"):
+        return redirect(url_for("login"))
+
+    mensagem = request.form.get("mensagem", "").strip()
+
+    doc_ref = db.collection("desabafos").document(id)
+    doc = doc_ref.get()
+
+    if not doc.exists:
+        flash("Desabafo não encontrado.", "error")
+        return redirect(url_for("meus_desabafos"))
+
+    desabafo = doc.to_dict()
+
+    # 🔒 Segurança
+    if desabafo.get("usuario_id") != session.get("usuario_id"):
+        flash("Você não tem permissão para editar este desabafo.", "error")
+        return redirect(url_for("meus_desabafos"))
+
+    doc_ref.update({
+        "mensagem": mensagem,
+        "editado_em": firestore.SERVER_TIMESTAMP
+    })
+
+    flash("Desabafo atualizado com sucesso!", "success")
+    return redirect(url_for("meus_desabafos"))
 
 
 
