@@ -516,22 +516,29 @@ def admin_excluir_usuario(id):
 
 @app.route("/admin/desabafos")
 def admin_desabafos():
-    if session.get("usuario_role") != "admin":
-        flash("Acesso negado.", "error")
-        return redirect(url_for("index"))
 
-    desabafos = []
+    if not session.get("usuario_logado"):
+        return redirect(url_for("login"))
+
+    if session.get("usuario_role") != "admin":
+        flash("Acesso restrito ao administrador.", "error")
+        return redirect(url_for("index"))
 
     docs = (
         db.collection("desabafos")
-        .order_by("data", direction=firestore.Query.DESCENDING)
+        .order_by("criado_em", direction=firestore.Query.DESCENDING)
         .stream()
     )
+
+    desabafos = []
     for doc in docs:
         d = doc.to_dict()
         d["id"] = doc.id
         desabafos.append(d)
+
     return render_template("admin_desabafos.html", desabafos=desabafos)
+
+
 
 
 @app.route("/admin/desabafos/excluir/<id>")
@@ -551,7 +558,7 @@ def admin_excluir_desabafo(id):
 # ===============================
 
 def main():
-    app.run(port=int(os.environ.get("PORT", 5008)), debug=True)
+    app.run(port=int(os.environ.get("PORT", 5001)), debug=True)
 
 if __name__ == "__main__":
     main()
