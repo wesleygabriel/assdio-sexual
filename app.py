@@ -338,6 +338,7 @@ def meus_desabafos():
 )
 
 
+
     desabafos = []
     for doc in docs:
         d = doc.to_dict()
@@ -369,7 +370,7 @@ def excluir_desabafo(id):
     desabafo = doc.to_dict()
 
     # 🔒 segurança: só o dono pode excluir
-    if desabafo["user_id"] != session["usuario_id"]:
+    if desabafo["usuario_id"] != session["usuario_id"]:
         flash("Acesso negado.", "error")
         return redirect(url_for("index"))
 
@@ -546,7 +547,7 @@ def admin_excluir_desabafo(id):
 # ===============================
 
 def main():
-    app.run(port=int(os.environ.get("PORT", 5012)), debug=True)
+    app.run(port=int(os.environ.get("PORT", 5008)), debug=True)
 
 if __name__ == "__main__":
     main()

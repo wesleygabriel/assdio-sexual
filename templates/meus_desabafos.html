@@ -13,13 +13,17 @@
 
             <div class="desabafo-header">
                 <span class="desabafo-date">
-                    {{ d.data.strftime('%d/%m/%Y') if d.data }}
+                    {{ d.criado_em.strftime('%d/%m/%Y') if d.criado_em }}
                 </span>
             </div>
 
             <p class="desabafo-texto">
-                {{ d.texto }}
+                {{ d.mensagem }}
             </p>
+
+            <small class="desabafo-autor">
+                Por {{ d.autor }}
+            </small>
 
             <div class="desabafo-acoes">
                 <a
