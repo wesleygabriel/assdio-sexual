@@ -50,8 +50,8 @@ main {
 }
 
 .header img.logo {
-    height: 160px;
-    width: 120px;
+    height: 220px;
+    width: 180px;
 }
 
 .header h1 {
@@ -1429,58 +1429,68 @@ footer {
 /* =========================
    HISTORICO DO DESABAFO
 ========================= */
-
 :root {
-    --bg-card: #1e1e2f;
-    --bg-page: #12121c;
-    --text-main: #eaeaf0;
-    --text-muted: #a1a1b3;
-    --accent: #7aa2f7;
+    --bg-page: linear-gradient(135deg, #e6ddff, #d9e4ff);
+    --bg-card: #f6f3ff;
+  
+    --text-main: #3a2f5c;
+    --text-muted: #6f6a8a;
+  
+    --accent: #8b6cf0;
+    --accent-hover: #7458d6;
+  
     --danger: #ff6b6b;
-    --border: rgba(255,255,255,0.08);
+  
+    --border: rgba(120, 100, 200, 0.15);
+  
+    --radius-lg: 22px;
+    --radius-md: 14px;
+  
+    --shadow: 0 20px 40px rgba(138, 108, 240, 0.15);
   }
   
-  /* Container */
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+  }
+  
+  /* CONTAINER */
   .desabafos-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 16px;
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
   }
   
   .desabafos-title {
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 32px;
-    color: var(--text-main);
+    font-size: 2.2rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
   }
   
-  /* Card */
+  /* CARD */
   .desabafo-card {
     background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.4s ease;
-  }
-  
-  /* animação ao excluir */
-  .desabafo-card.removendo {
-    opacity: 0;
-    transform: translateX(40px);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   
   .desabafo-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 25px 55px rgba(138, 108, 240, 0.22);
   }
   
-  /* Header */
+  /* HEADER */
   .desabafo-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 0.8rem;
   }
   
   .desabafo-date {
@@ -1488,51 +1498,90 @@ footer {
     color: var(--text-muted);
   }
   
-  /* Texto */
+  /* TEXTO */
   .desabafo-texto {
-    font-size: 1rem;
+    font-size: 1.05rem;
     line-height: 1.6;
-    color: var(--text-main);
-    margin-bottom: 12px;
-    white-space: pre-wrap;
+    margin-bottom: 1.2rem;
   }
   
-  /* Autor */
-  .desabafo-autor {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 16px;
-    display: block;
-  }
-  
-  /* Ações */
+  /* AÇÕES */
   .desabafo-acoes {
-    display: flex;
-    justify-content: flex-end;
+    text-align: right;
+  }
+  
+  .desabafo-btn {
+    border: none;
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
   }
   
   .desabafo-btn.delete {
-    background: transparent;
-    border: 1px solid var(--danger);
+    background: rgba(255, 107, 107, 0.15);
     color: var(--danger);
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
   }
   
   .desabafo-btn.delete:hover {
     background: var(--danger);
-    color: #fff;
+    color: white;
+    transform: scale(1.05);
   }
   
-  /* Vazio */
+  /* ESTADO VAZIO */
   .desabafo-vazio {
     text-align: center;
+    font-size: 1.1rem;
     color: var(--text-muted);
-    margin-top: 60px;
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
   }
+  
+  /* ANIMAÇÃO DE EXCLUSÃO */
+  .desabafo-card.fade-out {
+    opacity: 0;
+    transform: translateX(40px) scale(0.95);
+    transition: all 0.3s ease;
+  }
+
+
+  .voltar-historico {
+    display: block !important;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 999;
+}
+
+.btn-voltar {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+
+    padding: 12px 22px;
+    border-radius: 16px;
+
+    background: linear-gradient(135deg, #7a5cff, #9f8cff);
+    color: #ffffff !important;
+
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+
+    box-shadow: 0 10px 25px rgba(122, 92, 255, 0.35);
+    transition: all 0.3s ease;
+}
+
+.btn-voltar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 35px rgba(122, 92, 255, 0.45);
+}
+
+  
   
 
 

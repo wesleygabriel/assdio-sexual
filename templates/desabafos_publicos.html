@@ -5,34 +5,42 @@
 
 <div class="desabafos-container">
 
-    <h1 class="desabafos-title">Desabafos Públicos</h1>
+    <div class="voltar-historico">
+        <a href="{{ url_for('desabafo') }}" class="btn-voltar">
+            ← Voltar
+        </a>
+    </div>
+
+    <h1 class="desabafos-title">Desabafos da Comunidade</h1>
 
     {% if desabafos %}
         {% for d in desabafos %}
-        <div class="desabafo-card">
+        <div class="desabafo-card publico">
 
             <div class="desabafo-header">
-                <span class="desabafo-user">{{ d.user_name }}</span>
                 <span class="desabafo-date">
-                    {{ d.data.strftime('%d/%m/%Y') if d.data }}
+                    {{ d.criado_em.strftime('%d/%m/%Y') if d.criado_em }}
                 </span>
             </div>
 
             <p class="desabafo-texto">
-                {{ d.texto }}
+                {{ d.mensagem }}
             </p>
 
-            <!-- futuras reações -->
-            <div class="desabafo-reacoes">
-                <span>💙 Apoio</span>
-                <span>😢 Força</span>
-                <span>👏 Coragem</span>
-            </div>
+            <small class="desabafo-autor">
+                {% if d.anonimo %}
+                    Anônimo
+                {% else %}
+                    {{ d.autor }}
+                {% endif %}
+            </small>
 
         </div>
         {% endfor %}
     {% else %}
-        <p class="desabafo-vazio">Nenhum desabafo publicado ainda.</p>
+        <p class="desabafo-vazio">
+            Nenhum desabafo público ainda.
+        </p>
     {% endif %}
 
 </div>

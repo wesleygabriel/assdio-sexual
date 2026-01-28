@@ -3,9 +3,18 @@
 
 {% block content %}
 
+
 <div class="desabafos-container">
 
+    <div class="voltar-historico">
+        <a href="{{ url_for('desabafo') }}" class="btn-voltar">
+            <span>← Voltar</span>
+        </a>
+    </div>
+
+
     <h1 class="desabafos-title">Meus Desabafos</h1>
+
 
     {% if desabafos %}
         {% for d in desabafos %}
@@ -34,7 +43,6 @@
                   Excluir
                 </a>
             </div>
-
         </div>
         {% endfor %}
     {% else %}

@@ -383,23 +383,27 @@ def excluir_desabafo(id):
 # ===============================
 # 🔹 publico
 # ===============================
-@app.route("/desabafos-publicos")
+@app.route("/desabafos_publicos")
 def desabafos_publicos():
-    desabafos = []
+    if not session.get("usuario_logado"):
+        session["destino_pos_login"] = url_for("desabafos_publicos")
+        return redirect(url_for("login"))
 
     docs = (
         db.collection("desabafos")
-        .where("publico", "==", True)
-        .order_by("data", direction=firestore.Query.DESCENDING)
+        .where("apagado", "==", False)
+        .order_by("criado_em", direction=firestore.Query.DESCENDING)
         .stream()
     )
 
+    desabafos = []
     for doc in docs:
         d = doc.to_dict()
         d["id"] = doc.id
         desabafos.append(d)
 
     return render_template("desabafos_publicos.html", desabafos=desabafos)
+
 
 
 
